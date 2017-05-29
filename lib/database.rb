@@ -19,12 +19,7 @@ class Database
   private
 
   def name_from_env
-    if ENV["RACK_ENV"] == "test"
-      return "./db/ci-server-test.db"
-    elsif ENV["RACK_ENV"] == "production"
-      return "./db/ci-server-production.db"
-    else # default to development
-      return "./db/ci-server-development.db"
-    end
+    env = ENV["RACK_ENV"] || "development"
+    return "./db/ci-server-#{env}.db"
   end
 end
