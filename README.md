@@ -9,7 +9,8 @@ Inspired by instructions found, [here](https://developer.github.com/v3/guides/bu
 * [x] Persist events (mongo, firebase, redis, **sqlite**, whatever).
 * [ ] Kickoff build process when push event occurs.
 * [ ] Store build process state (started, running, stopped, complete, result).
-* [ ] Post build process result to Slack channel.
+* [ ] Post build result to Slack channel.
+* [ ] Post build result to GitHub.
 
 ## Install ngrok
 
@@ -24,3 +25,11 @@ $ ngrok http -host-header=localhost.dev 80
 ## Setup CI Server as a Service
 
 [Source](https://blog.frd.mn/how-to-set-up-proper-startstop-services-ubuntu-debian-mac-windows/)
+
+## SQLite Datatypes
+
+* TEXT
+* NUMERIC
+* INTEGER (true/false, Time.now.to_i)
+* REAL
+* BLOB
