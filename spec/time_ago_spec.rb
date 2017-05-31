@@ -9,7 +9,12 @@ RSpec.describe "TimeHelper" do
 
     it "returns '2 minutes ago' when delta is 120 seconds" do
       result = subject.time_ago(0, 120)
-      expect(result).to eq("2 mintues ago")
+      expect(result).to eq("2 minutes ago")
+    end
+
+    it "returns '1 hour ago' when delta is 3600 seconds (60 * 60)" do
+      result = subject.time_ago(0, 3600)
+      expect(result).to eq("1 hour ago")
     end
 
     it "returns '2 hours ago' when delta is 7200 seconds (60 * 60 * 2)" do
