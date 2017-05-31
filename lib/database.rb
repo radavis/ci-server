@@ -1,16 +1,12 @@
 require "sqlite3"
 
-class Database
+class Database < SQLite3::Database
   attr_reader :name
 
   def initialize(name = nil)
     @name = name || name_from_env
-    @db = SQLite3::Database.new(@name)
-    @db.results_as_hash = true
-  end
-
-  def execute(*sql)
-    @db.execute(*sql)
+    super(@name)
+    @results_as_hash = true
   end
 
   def to_s

@@ -10,7 +10,7 @@ Inspired by instructions found, [here](https://developer.github.com/v3/guides/bu
 * [x] Persist repositories
 * [ ] Index page for events.
 * [x] Index page for repositories.
-* [ ] Assign configuration and build instructions for event/repo.
+* [ ] Assign configuration and build instructions for a repository.
 * [ ] Filter unique, unprocessed events for a repo.
 * [ ] Kickoff build process when push event occurs.
 * [ ] Store build process state (started, running, stopped, complete, result).

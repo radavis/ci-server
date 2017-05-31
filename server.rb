@@ -52,3 +52,18 @@ get "/repositories" do
   @repositories = @db.execute(sql)
   erb :repositories
 end
+
+patch "/repositories/:id" do |id|
+  sql = <<-SQL
+    update repositories
+    set
+      configuration_instructions = ?,
+      build_instructions = ?,
+      updated_at = ?
+    where id = ?
+  SQL
+  values = [params["configuration_instructions"], params["build_instructions"], now, id]
+  @db.execute(sql, values)
+
+  status 200
+end
