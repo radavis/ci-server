@@ -1,4 +1,5 @@
 require "securerandom"
+require_relative "./lib/database"
 
 namespace :ci do
   desc "generate a token with SecureRandom.urlsafe_base64"
@@ -31,9 +32,7 @@ end
 
 task :default do
   ENV["RACK_ENV"] = "test"
-  require_relative "./lib/database"
   require "rspec/core/rake_task"
-  Rake::Task["db:schema_load"].invoke
   RSpec::Core::RakeTask.new(:spec)
   Rake::Task[:spec].invoke
 end

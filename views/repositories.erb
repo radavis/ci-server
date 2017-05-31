@@ -1,0 +1,9 @@
+<% @repositories.each do |repo| %>
+  <div>
+    <a href="https://github.com/<%= repo["name"] %>">
+      <%= repo["name"] %>
+    </a>
+    Created
+    <%= time_ago(repo["created_at"]) %>
+  </div>
+<% end %>

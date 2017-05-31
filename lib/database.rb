@@ -6,6 +6,7 @@ class Database
   def initialize(name = nil)
     @name = name || name_from_env
     @db = SQLite3::Database.new(@name)
+    @db.results_as_hash = true
   end
 
   def execute(*sql)
