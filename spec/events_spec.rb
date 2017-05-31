@@ -1,19 +1,20 @@
 RSpec.describe "Events" do
   describe "GET /events" do
-    before do
-      db = Database.new
+    let(:db) { Database.new }
+    let(:name) { "rails/rails" }
+    let(:now) { Time.now.to_i }
+    let(:payload) { { example: "body" }.to_json }
 
-      name = "rails/rails"
+    before do
       sql = "insert or ignore into repositories (name, created_at, updated_at) values (?, ?, ?)"
-      values = [name, Time.now.to_i, Time.now.to_i]
+      values = [name, now, now]
       db.execute(sql, values)
       repository_id = db.execute("select id from repositories where name = ? limit 1", [name])[0]["id"]
 
-      payload = { example: "body" }.to_json
       sql = "insert into events (repository_id, event_type, json_payload, created_at, updated_at) values (?, ?, ?, ?, ?)"
-      db.execute(sql, [repository_id, "pong", payload, Time.now.to_i, Time.now.to_i])
-      db.execute(sql, [repository_id, "pull request", payload, Time.now.to_i, Time.now.to_i])
-      db.execute(sql, [repository_id, "40m dash", payload, Time.now.to_i, Time.now.to_i])
+      db.execute(sql, [repository_id, "pong", payload, now, now])
+      db.execute(sql, [repository_id, "pull request", payload, now, now])
+      db.execute(sql, [repository_id, "40m dash", payload, now, now])
     end
 
     it "lists events" do
