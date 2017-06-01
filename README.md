@@ -8,9 +8,9 @@ Inspired by instructions found, [here](https://developer.github.com/v3/guides/bu
 * [x] Receive events from GitHub.
 * [x] Persist events (mongo, firebase, redis, **sqlite**, whatever).
 * [x] Persist repositories
-* [ ] Index page for events.
+* [-] Index page for events.
 * [x] Index page for repositories.
-* [ ] Assign configuration and build instructions for a repository.
+* [x] Assign configuration and build instructions for a repository.
 * [ ] Filter unique, unprocessed events for a repo.
 * [ ] Kickoff build process when push event occurs.
 * [ ] Store build process state (started, running, stopped, complete, result).
@@ -25,6 +25,15 @@ Inspired by instructions found, [here](https://developer.github.com/v3/guides/bu
 $ brew cask install ngrok
 $ ngrok authtoken YourAuthToken
 $ ngrok http -host-header=localhost.dev 80
+```
+
+## Or Install pagekite
+
+[Homepage](https://pagekite.net/)
+
+```
+$ curl -s https://pagekite.net/pk/ | sudo bash
+$ pagekite.py 3000 username.pagekite.me
 ```
 
 ## Setup CI Server as a Service

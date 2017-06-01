@@ -25,9 +25,10 @@ get "/events" do
 end
 
 post "/events" do
-  event = JSON.parse(params["payload"])
-  token = event["hook"]["config"]["secret"]
-  authorize_github(token)
+  authorize_github(request)
+
+  body = request.body.read
+  event = JSON.parse(body)
 
   # store repository https://stackoverflow.com/a/15277374/2675670
   name = event["repository"]["full_name"]
@@ -41,7 +42,7 @@ post "/events" do
     insert into events (repository_id, event_type, json_payload, created_at, updated_at)
     values (?, ?, ?, ?, ?)
   SQL
-  values = [repository_id, request.env["HTTP_X_GITHUB_EVENT"], params["payload"], now, now]
+  values = [repository_id, request.env["HTTP_X_GITHUB_EVENT"], body, now, now]
   @db.execute(sql, values)
 
   status 200

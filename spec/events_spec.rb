@@ -1,4 +1,6 @@
 RSpec.describe "Events" do
+  include AuthorizationHelper
+
   describe "GET /events" do
     let(:db) { Database.new }
     let(:name) { "rails/rails" }
@@ -26,20 +28,23 @@ RSpec.describe "Events" do
   end
 
   describe "POST /events" do
+    let(:key) { "abc123" }
     let(:json) { File.read("./docs/github-event-payload.json") }
-    let(:payload) { JSON.parse(json) }
+    let(:hmac) { hmac_hex_digest("sha1", key, json) }
 
-    before { ENV["GITHUB_WEBHOOK_TOKEN"] = "abc123" }
+    before { ENV["GITHUB_WEBHOOK_TOKEN"] = key }
 
     it "accepts POST requests from GitHub" do
-      payload["hook"]["config"]["secret"] = "abc123"
-      post "/events", { payload: payload.to_json }, { "HTTP_X_GITHUB_EVENT" => "ping" }
+      header "X-Github-Event", "ping"
+      header "X-Hub-Signature", "sha1=#{hmac}"
+      post "/events", json
       expect(last_response).to be_ok
     end
 
     it "rejects POST requests from unknown entities" do
-      payload["hook"]["config"]["secret"] = "xyz987"
-      post "/events", { payload: payload.to_json }, { "HTTP_X_GITHUB_EVENT" => "ping" }
+      header "X-Github-Event", "ping"
+      header "X-Hub-Signature", "sha1=junk"
+      post "/events", json
       expect(last_response).to be_forbidden
     end
   end
