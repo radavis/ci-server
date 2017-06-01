@@ -30,12 +30,12 @@ post "/events" do
   body = request.body.read
   event = JSON.parse(body)
 
-  # store repository https://stackoverflow.com/a/15277374/2675670
+  # store repository
   name = event["repository"]["full_name"]
   sql = "insert or ignore into repositories (name, created_at, updated_at) values (?, ?, ?)"
   values = [name, now, now]
   @db.execute(sql, values)
-  repository_id = @db.execute("select id from repositories where name = ? limit 1", [name])[0]["id"]
+  repository_id = @db.execute("select id from repositories where name = ?", [name]).first["id"]
 
   # store event
   sql = <<-SQL
@@ -45,7 +45,7 @@ post "/events" do
   values = [repository_id, request.env["HTTP_X_GITHUB_EVENT"], body, now, now]
   @db.execute(sql, values)
 
-  status 200
+  status 201
 end
 
 get "/repositories" do

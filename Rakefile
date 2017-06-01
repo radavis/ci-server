@@ -5,6 +5,7 @@ Bundler.require(:default, ENV["RACK_ENV"])
 
 require "securerandom"
 require_relative "./lib/database"
+require_relative "./lib/event_processor"
 
 namespace :ci do
   desc "generate a token with SecureRandom.urlsafe_base64"
@@ -24,6 +25,16 @@ namespace :ci do
     host = ENV["PAGEKITE_HOSTNAME"]
     port = ENV["PORT"]
     exec("pagekite.py #{port} #{host}")
+  end
+
+  desc "create build records from github events. schedule this every (x) seconds."
+  task :process_events do
+    EventProcessor.engage
+  end
+
+  desc "execute the next unstarted build. schedule this every (x) minutes."
+  task :build do
+    Builder.build
   end
 end
 

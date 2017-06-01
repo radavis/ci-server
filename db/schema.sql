@@ -25,9 +25,10 @@ create table events (
 drop table if exists builds;
 create table builds (
   id integer primary key not null,
+  head_commit_id text not null,
   repository_id integer not null,
-  build_status text,
-  build_output text,
+  started integer not null default 0,
+  build_report text,
   exit_status integer,
   created_at integer not null,
   updated_at integer not null,

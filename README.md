@@ -11,9 +11,9 @@ Inspired by instructions found, [here](https://developer.github.com/v3/guides/bu
 * [-] Index page for events.
 * [x] Index page for repositories.
 * [-] Assign configuration and build instructions for a repository (POST).
-* [ ] Filter unique, unprocessed events for a repo.
+* [x] Filter unprocessed events for a repo.
 * [ ] Kickoff build process when push event occurs.
-* [ ] Store build process state (started, running, stopped, complete, result).
+* [ ] Store build process state (started, complete).
 * [ ] Post build result to Slack channel.
 * [ ] Post build result to GitHub.
 

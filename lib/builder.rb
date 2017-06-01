@@ -1,7 +1,73 @@
 class Builder
-  # create tmpdir
-  # clone branch of repository
-  # run configuration instructions
-  # run build instructions
-  # store results
+  class << self
+    def build
+      id = Database.execute("select * from builds where started = 0").first["id"]
+      new(id).build
+    end
+  end
+
+  def initialize(build_id)
+    @build = Database.execute("select * from builds where build.id = ?", [build_id]).first
+  end
+
+  def build
+    set_build_to_started
+    Dir.mktmpdir do |dir|
+      Dir.chdir(dir) do
+        execute_command_list
+      end
+    end
+  end
+
+  private
+  def execute_command_list
+    executed_commands = []
+    exitstatus = 0
+
+    command_list.each do |command|
+      stdout, stderr, status = Open3.capture3(command)  # log this
+      exitstatus = status.exitstatus
+      executed_commands << [command, stdout, stderr, exitstatus]
+      break if exitstatus != 0
+    end
+
+    sql = "update builds set build_report = ?, exit_status = ? where id = ?"
+    Database.execute(sql, [executed_commands.to_json, exitstatus, @build["id"]])
+  end
+
+  def command_list
+    [
+      "git init",
+      "git remote add origin #{repository_url}",
+      "git pull origin master",
+      "git checkout #{head_commit_id}",
+      configuration_instructions,
+      build_instructions
+    ]
+  end
+
+  def set_build_to_started
+    Database.execute("update builds set started = 1 where id = ?", [@build["id"]])
+  end
+
+  def repository
+    @repo ||= Database.execute("select * from repositories where id = ?", build["repository_id"]).first
+  end
+
+  def repository_url
+    full_name = repository["full_name"]
+    "https://github.com/#{full_name}.git"
+  end
+
+  def configuration_instructions
+    repository["configuration_instructions"] || "echo 'configuration instructions not present.'"
+  end
+
+  def build_instructions
+    repository["build_instructions"]
+  end
+
+  def head_commit_id
+    @build["head_commit_id"]
+  end
 end
