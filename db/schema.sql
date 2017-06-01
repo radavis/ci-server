@@ -21,3 +21,15 @@ create table events (
   updated_at integer not null,
   foreign key (repository_id) references repositories (id)
 );
+
+drop table if exists builds;
+create table builds (
+  id integer primary key not null,
+  repository_id integer not null,
+  build_status text,
+  build_output text,
+  exit_status integer,
+  created_at integer not null,
+  updated_at integer not null,
+  foreign key (repository_id) references repositories (id)
+);

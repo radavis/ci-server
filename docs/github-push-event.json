@@ -1,0 +1,192 @@
+{
+  "ref": "refs/heads/master",
+  "before": "40f3ba4f4a8f8351757b0f24bdaec9a482539b84",
+  "after": "39f114f83acb8df4fbd9d98362312aae98b9d0e2",
+  "created": false,
+  "deleted": false,
+  "forced": false,
+  "base_ref": null,
+  "compare": "https://github.com/radavis/ci-server/compare/40f3ba4f4a8f...39f114f83acb",
+  "commits": [
+    {
+      "id": "39f114f83acb8df4fbd9d98362312aae98b9d0e2",
+      "tree_id": "29ce7e11e6fd66e77b164fc9a1efd2e3f858a24a",
+      "distinct": true,
+      "message": "rake tasks for ngrok and pagekite, use hmac to authenticate github requests",
+      "timestamp": "2017-05-31T20:02:44-04:00",
+      "url": "https://github.com/radavis/ci-server/commit/39f114f83acb8df4fbd9d98362312aae98b9d0e2",
+      "author": {
+        "name": "Richard Davis",
+        "email": "rdavis.bacs@gmail.com",
+        "username": "radavis"
+      },
+      "committer": {
+        "name": "Richard Davis",
+        "email": "rdavis.bacs@gmail.com",
+        "username": "radavis"
+      },
+      "added": [
+
+      ],
+      "removed": [
+
+      ],
+      "modified": [
+        ".env.example",
+        "README.md",
+        "Rakefile",
+        "lib/authorization_helper.rb",
+        "server.rb",
+        "spec/events_spec.rb"
+      ]
+    }
+  ],
+  "head_commit": {
+    "id": "39f114f83acb8df4fbd9d98362312aae98b9d0e2",
+    "tree_id": "29ce7e11e6fd66e77b164fc9a1efd2e3f858a24a",
+    "distinct": true,
+    "message": "rake tasks for ngrok and pagekite, use hmac to authenticate github requests",
+    "timestamp": "2017-05-31T20:02:44-04:00",
+    "url": "https://github.com/radavis/ci-server/commit/39f114f83acb8df4fbd9d98362312aae98b9d0e2",
+    "author": {
+      "name": "Richard Davis",
+      "email": "rdavis.bacs@gmail.com",
+      "username": "radavis"
+    },
+    "committer": {
+      "name": "Richard Davis",
+      "email": "rdavis.bacs@gmail.com",
+      "username": "radavis"
+    },
+    "added": [
+
+    ],
+    "removed": [
+
+    ],
+    "modified": [
+      ".env.example",
+      "README.md",
+      "Rakefile",
+      "lib/authorization_helper.rb",
+      "server.rb",
+      "spec/events_spec.rb"
+    ]
+  },
+  "repository": {
+    "id": 92783273,
+    "name": "ci-server",
+    "full_name": "radavis/ci-server",
+    "owner": {
+      "name": "radavis",
+      "email": "rdavis.bacs@gmail.com",
+      "login": "radavis",
+      "id": 1299034,
+      "avatar_url": "https://avatars3.githubusercontent.com/u/1299034?v=3",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/radavis",
+      "html_url": "https://github.com/radavis",
+      "followers_url": "https://api.github.com/users/radavis/followers",
+      "following_url": "https://api.github.com/users/radavis/following{/other_user}",
+      "gists_url": "https://api.github.com/users/radavis/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/radavis/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/radavis/subscriptions",
+      "organizations_url": "https://api.github.com/users/radavis/orgs",
+      "repos_url": "https://api.github.com/users/radavis/repos",
+      "events_url": "https://api.github.com/users/radavis/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/radavis/received_events",
+      "type": "User",
+      "site_admin": false
+    },
+    "private": false,
+    "html_url": "https://github.com/radavis/ci-server",
+    "description": null,
+    "fork": false,
+    "url": "https://github.com/radavis/ci-server",
+    "forks_url": "https://api.github.com/repos/radavis/ci-server/forks",
+    "keys_url": "https://api.github.com/repos/radavis/ci-server/keys{/key_id}",
+    "collaborators_url": "https://api.github.com/repos/radavis/ci-server/collaborators{/collaborator}",
+    "teams_url": "https://api.github.com/repos/radavis/ci-server/teams",
+    "hooks_url": "https://api.github.com/repos/radavis/ci-server/hooks",
+    "issue_events_url": "https://api.github.com/repos/radavis/ci-server/issues/events{/number}",
+    "events_url": "https://api.github.com/repos/radavis/ci-server/events",
+    "assignees_url": "https://api.github.com/repos/radavis/ci-server/assignees{/user}",
+    "branches_url": "https://api.github.com/repos/radavis/ci-server/branches{/branch}",
+    "tags_url": "https://api.github.com/repos/radavis/ci-server/tags",
+    "blobs_url": "https://api.github.com/repos/radavis/ci-server/git/blobs{/sha}",
+    "git_tags_url": "https://api.github.com/repos/radavis/ci-server/git/tags{/sha}",
+    "git_refs_url": "https://api.github.com/repos/radavis/ci-server/git/refs{/sha}",
+    "trees_url": "https://api.github.com/repos/radavis/ci-server/git/trees{/sha}",
+    "statuses_url": "https://api.github.com/repos/radavis/ci-server/statuses/{sha}",
+    "languages_url": "https://api.github.com/repos/radavis/ci-server/languages",
+    "stargazers_url": "https://api.github.com/repos/radavis/ci-server/stargazers",
+    "contributors_url": "https://api.github.com/repos/radavis/ci-server/contributors",
+    "subscribers_url": "https://api.github.com/repos/radavis/ci-server/subscribers",
+    "subscription_url": "https://api.github.com/repos/radavis/ci-server/subscription",
+    "commits_url": "https://api.github.com/repos/radavis/ci-server/commits{/sha}",
+    "git_commits_url": "https://api.github.com/repos/radavis/ci-server/git/commits{/sha}",
+    "comments_url": "https://api.github.com/repos/radavis/ci-server/comments{/number}",
+    "issue_comment_url": "https://api.github.com/repos/radavis/ci-server/issues/comments{/number}",
+    "contents_url": "https://api.github.com/repos/radavis/ci-server/contents/{+path}",
+    "compare_url": "https://api.github.com/repos/radavis/ci-server/compare/{base}...{head}",
+    "merges_url": "https://api.github.com/repos/radavis/ci-server/merges",
+    "archive_url": "https://api.github.com/repos/radavis/ci-server/{archive_format}{/ref}",
+    "downloads_url": "https://api.github.com/repos/radavis/ci-server/downloads",
+    "issues_url": "https://api.github.com/repos/radavis/ci-server/issues{/number}",
+    "pulls_url": "https://api.github.com/repos/radavis/ci-server/pulls{/number}",
+    "milestones_url": "https://api.github.com/repos/radavis/ci-server/milestones{/number}",
+    "notifications_url": "https://api.github.com/repos/radavis/ci-server/notifications{?since,all,participating}",
+    "labels_url": "https://api.github.com/repos/radavis/ci-server/labels{/name}",
+    "releases_url": "https://api.github.com/repos/radavis/ci-server/releases{/id}",
+    "deployments_url": "https://api.github.com/repos/radavis/ci-server/deployments",
+    "created_at": 1496101251,
+    "updated_at": "2017-05-29T23:40:58Z",
+    "pushed_at": 1496275371,
+    "git_url": "git://github.com/radavis/ci-server.git",
+    "ssh_url": "git@github.com:radavis/ci-server.git",
+    "clone_url": "https://github.com/radavis/ci-server.git",
+    "svn_url": "https://github.com/radavis/ci-server",
+    "homepage": null,
+    "size": 17,
+    "stargazers_count": 0,
+    "watchers_count": 0,
+    "language": "Ruby",
+    "has_issues": true,
+    "has_projects": true,
+    "has_downloads": true,
+    "has_wiki": true,
+    "has_pages": false,
+    "forks_count": 0,
+    "mirror_url": null,
+    "open_issues_count": 0,
+    "forks": 0,
+    "open_issues": 0,
+    "watchers": 0,
+    "default_branch": "master",
+    "stargazers": 0,
+    "master_branch": "master"
+  },
+  "pusher": {
+    "name": "radavis",
+    "email": "rdavis.bacs@gmail.com"
+  },
+  "sender": {
+    "login": "radavis",
+    "id": 1299034,
+    "avatar_url": "https://avatars3.githubusercontent.com/u/1299034?v=3",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/radavis",
+    "html_url": "https://github.com/radavis",
+    "followers_url": "https://api.github.com/users/radavis/followers",
+    "following_url": "https://api.github.com/users/radavis/following{/other_user}",
+    "gists_url": "https://api.github.com/users/radavis/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/radavis/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/radavis/subscriptions",
+    "organizations_url": "https://api.github.com/users/radavis/orgs",
+    "repos_url": "https://api.github.com/users/radavis/repos",
+    "events_url": "https://api.github.com/users/radavis/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/radavis/received_events",
+    "type": "User",
+    "site_admin": false
+  }
+}

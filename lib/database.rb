@@ -1,6 +1,12 @@
 require "sqlite3"
 
 class Database < SQLite3::Database
+  class << self
+    def execute(*args)
+      new.execute(*args)
+    end
+  end
+
   attr_reader :name
 
   def initialize(name = nil)
