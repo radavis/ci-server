@@ -3,7 +3,8 @@ require "open3"
 class Builder
   class << self
     def build
-      id = Database.execute("select * from builds where started = 0").first&.(:[], "id")
+      result = Database.execute("select * from builds where started = 0").first
+      id = result&.[]("id")
       if id
         new(id).build
       else
@@ -13,7 +14,7 @@ class Builder
   end
 
   def initialize(build_id)
-    @build = Database.execute("select * from builds where builds.id = ?", [build_id]).first
+    @build = db.execute("select * from builds where builds.id = ?", [build_id]).first
   end
 
   def build
@@ -26,12 +27,14 @@ class Builder
   end
 
   private
+  attr_reader :db
+
   def execute_command_list
     executed_commands = []
     exitstatus = 0
 
+    puts "builds.id: #{@build["id"]} for #{repository["name"]} started."
     command_list.each do |command|
-      puts "builds.id: #{@build["id"]} for #{repository["name"]}"
       puts "  executing: #{command}"
       stdout, stderr, status = Open3.capture3(command)  # log this
       exitstatus = status.exitstatus
@@ -41,7 +44,7 @@ class Builder
 
     puts "builds.id: #{@build["id"]} for #{repository["name"]} exited with #{exitstatus} exit status."
     sql = "update builds set build_report = ?, exit_status = ? where id = ?"
-    Database.execute(sql, [executed_commands.to_json, exitstatus, @build["id"]])
+    db.execute(sql, [executed_commands.to_json, exitstatus, @build["id"]])
   end
 
   def command_list
@@ -57,11 +60,11 @@ class Builder
 
   def set_build_to_started
     puts "Update builds.id: #{@build["id"]} set to started for #{repository["name"]}."
-    Database.execute("update builds set started = 1 where id = ?", [@build["id"]])
+    db.execute("update builds set started = 1 where id = ?", [@build["id"]])
   end
 
   def repository
-    @repo ||= Database.execute("select * from repositories where id = ?", @build["repository_id"]).first
+    @repo ||= db.execute("select * from repositories where id = ?", @build["repository_id"]).first
   end
 
   def repository_url
@@ -79,5 +82,9 @@ class Builder
 
   def head_commit_id
     @build["head_commit_id"]
+  end
+
+  def db
+    @db ||= Database.new
   end
 end

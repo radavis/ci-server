@@ -5,14 +5,15 @@ class EventProcessor
         select * from events
         join repositories on events.repository_id = repositories.id
         where repositories.build_instructions not null and
-          events.event_type like 'push' and
-          events.processed = 0;
+          events.processed = 0 and
+          events.event_type like 'push';
       SQL
 
       Database.execute(sql)
     end
 
     def engage
+      puts "EventProcessor: no events to process" if unprocessed_events.empty?
       unprocessed_events.each do |event|
         process(event)
       end
@@ -44,6 +45,7 @@ class EventProcessor
       db.execute(update_event, event_values)
       db.commit
       puts "  builds.id: #{build_id} created."
+      puts "Transaction end."
     rescue SQLite3::Exception => e
       puts "Transaction failed."
       puts e

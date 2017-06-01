@@ -59,6 +59,17 @@ namespace :db do
   task :schema_load do
     `sqlite3 #{Database.new} < ./db/schema.sql`
   end
+
+  desc "execute sql"
+  task :execute do
+    sql = ENV["SQL"]
+    unless sql
+      example_query = "select id, repository_id, event_type, processed, created_at from events"
+      raise "Try: rake db:execute SQL='#{example_query}'"
+    end
+
+    PP.pp Database.new.execute(sql)
+  end
 end
 
 task :default do
