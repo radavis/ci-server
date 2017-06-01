@@ -33,9 +33,24 @@ namespace :ci do
     EventProcessor.engage
   end
 
-  desc "execute the next unstarted build. schedule this every (x) minutes."
+  desc "execute the next unstarted build in the queue. schedule this every (x) minutes."
   task :build do
     Builder.build
+  end
+
+  desc "print build report"
+  task :build_report do
+    id = ENV["BUILD_ID"]
+    raise "please specify a build id: rake ci:build_report BUILD_ID=3" unless id
+
+    build = Database.execute("select * from builds where id = ?", id).first
+    return unless build
+
+    build_report = JSON.parse(build["build_report"])
+    puts "Exit Status: #{build["exit_status"]}"
+    last_cmd, last_out, last_err, _ = build_report.last
+    puts "Last Command: #{last_cmd}"
+    puts "Last Result: #{last_err || last_out}"
   end
 end
 
@@ -60,12 +75,12 @@ namespace :db do
     `sqlite3 #{Database.new} < ./db/schema.sql`
   end
 
-  desc "execute sql"
-  task :execute do
+  desc "execute sql query against database"
+  task :query do
     sql = ENV["SQL"]
     unless sql
       example_query = "select id, repository_id, event_type, processed, created_at from events"
-      raise "Try: rake db:execute SQL='#{example_query}'"
+      raise "Try: rake db:query SQL='#{example_query}'"
     end
 
     PP.pp Database.new.execute(sql)
