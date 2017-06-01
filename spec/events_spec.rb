@@ -38,7 +38,7 @@ RSpec.describe "Events" do
       header "X-Github-Event", "ping"
       header "X-Hub-Signature", "sha1=#{hmac}"
       post "/events", json
-      expect(last_response).to be_ok
+      expect(last_response).to be_created
     end
 
     it "rejects POST requests from unknown entities" do

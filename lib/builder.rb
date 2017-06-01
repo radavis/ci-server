@@ -1,13 +1,19 @@
+require "open3"
+
 class Builder
   class << self
     def build
-      id = Database.execute("select * from builds where started = 0").first["id"]
-      new(id).build
+      id = Database.execute("select * from builds where started = 0").first&.(:[], "id")
+      if id
+        new(id).build
+      else
+        puts "Builder: no builds to build."
+      end
     end
   end
 
   def initialize(build_id)
-    @build = Database.execute("select * from builds where build.id = ?", [build_id]).first
+    @build = Database.execute("select * from builds where builds.id = ?", [build_id]).first
   end
 
   def build
@@ -25,12 +31,15 @@ class Builder
     exitstatus = 0
 
     command_list.each do |command|
+      puts "builds.id: #{@build["id"]} for #{repository["name"]}"
+      puts "  executing: #{command}"
       stdout, stderr, status = Open3.capture3(command)  # log this
       exitstatus = status.exitstatus
       executed_commands << [command, stdout, stderr, exitstatus]
       break if exitstatus != 0
     end
 
+    puts "builds.id: #{@build["id"]} for #{repository["name"]} exited with #{exitstatus} exit status."
     sql = "update builds set build_report = ?, exit_status = ? where id = ?"
     Database.execute(sql, [executed_commands.to_json, exitstatus, @build["id"]])
   end
@@ -47,16 +56,17 @@ class Builder
   end
 
   def set_build_to_started
+    puts "Update builds.id: #{@build["id"]} set to started for #{repository["name"]}."
     Database.execute("update builds set started = 1 where id = ?", [@build["id"]])
   end
 
   def repository
-    @repo ||= Database.execute("select * from repositories where id = ?", build["repository_id"]).first
+    @repo ||= Database.execute("select * from repositories where id = ?", @build["repository_id"]).first
   end
 
   def repository_url
-    full_name = repository["full_name"]
-    "https://github.com/#{full_name}.git"
+    name = repository["name"]
+    "https://github.com/#{name}.git"
   end
 
   def configuration_instructions

@@ -4,6 +4,7 @@ require "bundler/setup"
 Bundler.require(:default, ENV["RACK_ENV"])
 
 require "securerandom"
+require_relative "./lib/builder"
 require_relative "./lib/database"
 require_relative "./lib/event_processor"
 
