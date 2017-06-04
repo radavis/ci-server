@@ -4,7 +4,8 @@ class EventProcessor
       sql = <<-SQL
         select * from events
         join repositories on events.repository_id = repositories.id
-        where repositories.build_instructions not null and
+        where repositories.url not null and
+          repositories.build_instructions not null and
           events.processed = 0 and
           events.event_type like 'push';
       SQL

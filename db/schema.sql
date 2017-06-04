@@ -2,6 +2,7 @@ drop table if exists repositories;
 create table repositories (
   id integer primary key not null,
   name text not null,
+  url text,
   configuration_instructions text,
   build_instructions text default "bundle && rake",
   created_at integer not null,

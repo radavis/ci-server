@@ -59,7 +59,7 @@ $ pagekite.py 3000 username.pagekite.me
 1. Start ngrok or pagekite
 1. Create GitHub webhook with token and path to this application: `/events`
 1. After test post from GitHub, check `/repositories`
-1. Add build instructions for repository. `rake db:query SQL=""`
+1. Add build instructions and clone URL for repository. `rake db:query SQL=""`
 1. Process events: `rake ci:process_events`
 1. Build: `rake ci:build`
 
