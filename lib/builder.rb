@@ -17,7 +17,7 @@ class Builder
 
   def initialize(build_id)
     @build = db.execute("select * from builds where builds.id = ?", [build_id]).first
-    @exitstatus = nil
+    @exitstatus = 0
   end
 
   def build

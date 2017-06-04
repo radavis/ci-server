@@ -45,9 +45,11 @@ namespace :ci do
     sql = "select * from builds where exit_status not null and reported = 0"
     completed_builds = Database.execute(sql)
     completed_builds.each do |build|
-      passed = build["exitstatus"] == 0
+      sql = "select * from repositories where id = ?"
+      repository = Database.execute(sql, build["repository_id"]).first
+      passed = build["exit_status"] == 0
       emoji = passed ? Emoji::POSITIVE.sample : Emoji::NEGATIVE.sample
-      message = "The latest build of #{build["repository_name"]} #{passed ? "was a success" : "failed"}. #{emoji}"
+      message = "The latest build of #{repository["name"]} #{passed ? "was a success!" : "failed."} #{emoji}"
       Slack.new(message).post
       # GitHub.announce
       sql = "update builds set reported = 1, updated_at = ? where id = ?"
