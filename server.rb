@@ -3,9 +3,9 @@ Dotenv.load
 require "bundler/setup"
 Bundler.require(:default, ENV["RACK_ENV"])
 
-require_relative "./lib/authorization_helper"
-require_relative "./lib/time_helper"
-require_relative "./lib/database"
+Dir[File.join(File.dirname(__FILE__), 'lib', '**', '*.rb')].each { |file| require file }
+
+ActiveRecord::Base.establish_connection(Database.config)
 
 helpers do
   include AuthorizationHelper

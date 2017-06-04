@@ -4,7 +4,7 @@ create table repositories (
   name text not null,
   url text,
   configuration_instructions text,
-  build_instructions text default "bundle && rake",
+  build_instructions text,
   created_at integer not null,
   updated_at integer not null
 );

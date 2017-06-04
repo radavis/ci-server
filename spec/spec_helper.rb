@@ -1,5 +1,5 @@
 ENV["RACK_ENV"] = "test"
-require File.expand_path('../../server.rb', __FILE__)
+require_relative "../server"
 require "rack/test"
 require "rspec"
 
@@ -15,7 +15,7 @@ RSpec.configure do |config|
   config.include RackHelpers
 
   config.backtrace_exclusion_patterns << /.gem/
-  config.before { `sqlite3 #{Database.new} < ./db/schema.sql` }
+  config.before(:each) { `sqlite3 #{Database.new} < ./db/schema.sql` }
 
   # silence stdout, stderr during testing https://stackoverflow.com/a/15432948/2675670
   standard_out = $stdout

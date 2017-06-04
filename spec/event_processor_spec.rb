@@ -1,5 +1,3 @@
-require_relative "../lib/event_processor"
-
 RSpec.describe EventProcessor do
   describe ".engage" do
     let(:db) { Database.new }
