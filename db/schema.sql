@@ -3,7 +3,7 @@ create table repositories (
   id integer primary key not null,
   name text not null,
   configuration_instructions text,
-  build_instructions text,
+  build_instructions text default "bundle && rake",
   created_at integer not null,
   updated_at integer not null
 );
@@ -30,6 +30,7 @@ create table builds (
   started integer not null default 0,
   build_report text,
   exit_status integer,
+  reported integer not null default 0,
   created_at integer not null,
   updated_at integer not null,
   foreign key (repository_id) references repositories (id)

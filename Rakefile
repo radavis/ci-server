@@ -6,7 +6,9 @@ Bundler.require(:default, ENV["RACK_ENV"])
 require "securerandom"
 require_relative "./lib/builder"
 require_relative "./lib/database"
+require_relative "./lib/emoji"
 require_relative "./lib/event_processor"
+require_relative "./lib/slack"
 
 namespace :ci do
   desc "generate a token with SecureRandom.urlsafe_base64"
@@ -36,6 +38,21 @@ namespace :ci do
   desc "execute the next unstarted build in the queue. schedule this every (x) minutes."
   task :build do
     Builder.build
+  end
+
+  desc "announce build results to slack. schedule this every (x) seconds."
+  task :announce do
+    sql = "select * from builds where exit_status not null and reported = 0"
+    completed_builds = Database.execute(sql)
+    completed_builds.each do |build|
+      passed = build["exitstatus"] == 0
+      emoji = passed ? Emoji::POSITIVE.sample : Emoji::NEGATIVE.sample
+      message = "The latest build of #{build["repository_name"]} #{passed ? "was a success" : "failed"}. #{emoji}"
+      Slack.new(message).post
+      # GitHub.announce
+      sql = "update builds set reported = 1, updated_at = ? where id = ?"
+      Database.execute(sql, [Time.now.to_i, build["id"]])
+    end
   end
 
   desc "print build report"
@@ -85,6 +102,14 @@ namespace :db do
 
     PP.pp Database.new.execute(sql)
   end
+end
+
+desc "post slack message"
+task :slack do
+  message = ENV["MESSAGE"]
+  raise "please specify a message: rake slack MESSAGE=\"Microphone check. One, two.\"" unless message
+  result = Slack.new(message).post
+  PP.pp result
 end
 
 task :default do

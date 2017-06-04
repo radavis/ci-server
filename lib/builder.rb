@@ -13,8 +13,11 @@ class Builder
     end
   end
 
+  attr_reader :exitstatus
+
   def initialize(build_id)
     @build = db.execute("select * from builds where builds.id = ?", [build_id]).first
+    @exitstatus = nil
   end
 
   def build
@@ -31,12 +34,11 @@ class Builder
 
   def execute_command_list
     executed_commands = []
-    exitstatus = 0
 
     puts "builds.id: #{@build["id"]} for #{repository["name"]} started."
     command_list.each do |command|
       puts "  executing: #{command}"
-      stdout, stderr, status = Open3.capture3(command)  # log this
+      stdout, stderr, status = Open3.capture3(command)
       exitstatus = status.exitstatus
       executed_commands << [command, stdout, stderr, exitstatus]
       break if exitstatus != 0
@@ -67,9 +69,12 @@ class Builder
     @repo ||= db.execute("select * from repositories where id = ?", @build["repository_id"]).first
   end
 
+  def repository_name
+    repository["name"]
+  end
+
   def repository_url
-    name = repository["name"]
-    "https://github.com/#{name}.git"
+    "https://github.com/#{repository_name}.git"
   end
 
   def configuration_instructions

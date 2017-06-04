@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "channel": "C5L1MMCFM",
+  "ts": "1496541854.258458",
+  "message": {
+    "text": "Test post please ignore.",
+    "username": "Slack API Tester",
+    "icons": {
+      "image_48": "https:\/\/s3-us-west-2.amazonaws.com\/slack-files2\/bot_icons\/2017-06-03\/192351777074_48.png"
+    },
+    "bot_id": "B5ND2T7B7",
+    "type": "message",
+    "subtype": "bot_message",
+    "ts": "1496541854.258458"
+  }
+}

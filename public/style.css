@@ -1,0 +1,33 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans|Lora|Share+Tech+Mono);
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #274156;
+}
+
+body {
+  font-family: "Lora", Georgia, Cambria, "Times New Roman", Times, serif;
+  color: #605856;
+  background-color: #FBFCFF;
+  margin: 0 10%;
+}
+
+div {
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.code {
+  font-family: "Share Tech Mono", Consolas, "Liberation Mono", Courier, monospace;
+  background-color: #D0CCD0;
+  white-space: pre;
+  padding: 0 1em;
+}
+
+.flash {
+  background-color: #E0F0F1;
+  font-size: 32px;
+  margin: 1ex 0;
+  padding: 1ex 0;
+  text-align: center;
+}
