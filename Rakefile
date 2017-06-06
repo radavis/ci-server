@@ -1,14 +1,5 @@
-require "dotenv"
-Dotenv.load
-require "bundler/setup"
-Bundler.require(:default, ENV["RACK_ENV"])
-
 require "securerandom"
-require_relative "./lib/builder"
-require_relative "./lib/database"
-require_relative "./lib/emoji"
-require_relative "./lib/event_processor"
-require_relative "./lib/slack"
+require_relative "./server"
 
 namespace :ci do
   desc "generate a token with SecureRandom.urlsafe_base64"
@@ -19,8 +10,7 @@ namespace :ci do
   desc "expose app to internet via ngrok"
   task :ngrok do
     port = ENV["PORT"]
-    # Executing shell commands from Ruby: https://stackoverflow.com/a/2400/2675670
-    exec("ngrok http #{port}")
+    exec("ngrok http #{port}")  # Executing shell commands from Ruby: https://stackoverflow.com/a/2400/2675670
   end
 
   desc "expose app to internet via pagekite"

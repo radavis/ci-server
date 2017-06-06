@@ -1,5 +1,8 @@
 # CI Server
 
+[![Code Climate](https://codeclimate.com/github/codeclimate/codeclimate/badges/gpa.svg)](https://codeclimate.com/github/codeclimate/codeclimate)
+[![Test Coverage](https://codeclimate.com/github/codeclimate/codeclimate/badges/coverage.svg)](https://codeclimate.com/github/codeclimate/codeclimate/coverage)
+
 Inspired by instructions found, [here](https://developer.github.com/v3/guides/building-a-ci-server/)
 
 ## Features
@@ -11,17 +14,18 @@ Inspired by instructions found, [here](https://developer.github.com/v3/guides/bu
 * [x] Index page for events.
 * [x] Index page for repositories.
 * [x] Assign configuration and build instructions for a repository (POST).
-* [ ] Add clone URL for private repositories: `https://#{username}:#{token}@github.com/#{repo_name}.git`
+* [x] Add clone URL for private repositories: `https://#{username}:#{token}@github.com/#{repo_name}.git`
 * [ ] Interface for adding configuration and build instructions.
 * [x] Filter unprocessed events for a repo.
 * [ ] Kickoff build process when push event occurs.
 * [x] Store build process state (started: true/false, exit_status: 0/non-zero).
-* [ ] Create schedule for tasks.
-* [ ] Post build result to Slack channel.
+* [ ] Create schedule for rake tasks: `rake ci:process_events`, `rake ci:build`
+* [x] Post build result to Slack channel.
   - [ ] with branch name
   - [ ] with link to build status page
 * [ ] Post build started to GitHub.
 * [ ] Post build result to GitHub.
+* [ ] "Restart Build" button.
 
 ## Technology
 

@@ -1,9 +1,5 @@
 class Event < ActiveRecord::Base
   class << self
-    def processable
-      unprocessed.pushes.with_configured_repository
-    end
-
     def unprocessed
       where(processed: false)
     end
@@ -15,12 +11,20 @@ class Event < ActiveRecord::Base
     def with_configured_repository
       joins(:repository).merge(Repository.configured)
     end
+
+    def processable
+      unprocessed.pushes.with_configured_repository
+    end
   end
 
   belongs_to :repository
 
+  validate :payload
+
   def payload
-    JSON.parse(json_payload)
+    JSON.parse(json_payload) if json_payload.present?
+  rescue
+    errors.add(json_payload, "Must be a JSON string.")
   end
 
   def head_commit_id

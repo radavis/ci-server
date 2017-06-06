@@ -22,13 +22,6 @@ RSpec.describe EventProcessor do
         count = db.execute("select * from builds").size
         expect(count).to eq(initial_count + 1)
       end
-
-      it "sets the head_commit_id build field" do
-        event_id = create_repository_and_event_returning_event_id(url, build_instructions)
-        EventProcessor.engage
-        build = db.execute("select * from builds order by created_at desc limit 1").first
-        expect(build["head_commit_id"]).to eq(event["head_commit"]["id"])
-      end
     end
 
     context "repository without a url" do

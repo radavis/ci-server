@@ -1,5 +1,5 @@
 RSpec.describe "Event" do
-  let(:json_payload) { { ref: "refs/heads/master" }.to_json }
+  let(:json_payload) { File.read("./docs/github-push-event.json") }
   let(:ci_server) do
     Repository.create({
       name: "radavis/ci-server",
@@ -43,4 +43,21 @@ RSpec.describe "Event" do
       expect(Event.with_configured_repository).to_not include(processed_push)
     end
   end
+
+  describe ".processable" do
+    it "returns events that are unprocessed, push-type, that belong to a configured repo" do
+      expect(Event.processable).to include(unprocessed_push)
+      expect(Event.processable).to_not include(processed_sync)
+      expect(Event.processable).to_not include(processed_push)
+    end
+  end
+
+  describe "#payload" do
+    let(:event) { ci_server.events.create({ event_type: "push", json_payload: json_payload }) }
+
+    it "returns the parsed json payload" do
+      expect(event.payload).to eq(JSON.parse(json_payload))
+    end
+  end
+
 end

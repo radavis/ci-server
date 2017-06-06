@@ -1,6 +1,5 @@
 ENV["RACK_ENV"] = "test"
 require_relative "../server"
-require "rack/test"
 require "rspec"
 
 module RackHelpers

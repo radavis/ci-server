@@ -9,9 +9,7 @@ class EventProcessor
 
     def process(event)
       ActiveRecord::Base.transaction do
-        # create build record
-        event.repository.builds.create(head_commit_id: event.head_commit_id)
-        # update event, set processed to true
+        event.repository.builds.create
         event.update_attributes(processed: true)
       end
     end
