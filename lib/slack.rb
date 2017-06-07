@@ -11,8 +11,8 @@ class Slack
   end
 
   def post
-    response = Net::HTTP.post_form(uri, options)
-    @response = JSON.parse(response.body)
+    @response = Net::HTTP.post_form(uri, options)
+    JSON.parse(response.body)
   end
 
   def options

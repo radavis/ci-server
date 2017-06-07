@@ -4,7 +4,7 @@ create table repositories (
   name text not null,
   url text,
   configuration_instructions text,
-  build_instructions text default "bundle && rake",
+  build_instructions text,
   created_at integer not null,
   updated_at integer not null
 );
@@ -26,7 +26,6 @@ create table events (
 drop table if exists builds;
 create table builds (
   id integer primary key not null,
-  head_commit_id text not null,
   repository_id integer not null,
   started integer not null default 0,
   build_report text,

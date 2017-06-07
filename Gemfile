@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "activerecord", require: "active_record"
 gem "dotenv"
 gem "rake"
 gem "sinatra"
@@ -11,5 +12,5 @@ end
 
 group :test do
   gem "rspec"
-  gem "rack-test"
+  gem "rack-test", require: "rack/test"
 end

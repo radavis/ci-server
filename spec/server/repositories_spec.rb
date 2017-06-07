@@ -24,7 +24,10 @@ RSpec.describe "Repositories" do
 
   describe "PATCH /repositories/:id" do
     it "updates the repository" do
-      patch "/repositories/#{id}", {
+      repo = Repository.create(name: "exloc/sagan")
+
+      patch "/repositories/#{repo.id}", {
+        url: "https://username:GITHUB_TOKEN@github.com/username/repo.git",
         configuration_instructions: "bundle && rake db:create db:migrate && rake db:test:prepare",
         build_instructions: "RAILS_ENV=test bundle exec rake spec"
       }
