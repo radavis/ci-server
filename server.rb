@@ -42,13 +42,24 @@ get "/repositories" do
   erb :repositories
 end
 
+get "/repositories/:id" do |id|
+  @repository = Repository.find(id)
+  erb :repository
+end
+
 patch "/repositories/:id" do |id|
   repo = Repository.find(id)
-  repo.update_attributes({
+  repo.assign_attributes({
     url: params["url"],
     configuration_instructions: params["configuration_instructions"],
     build_instructions: params["build_instructions"]
   })
 
-  status 200
+  if repo.save
+    # flash[:notice] = "Repository updated."
+  else
+    # flash[:error] = "There was a problem."
+  end
+
+  redirect to("/repositories/#{repo.id}")
 end

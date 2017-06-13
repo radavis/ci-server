@@ -18,6 +18,7 @@ class Event < ActiveRecord::Base
   end
 
   belongs_to :repository
+  has_many :builds
 
   validate :payload
 
@@ -29,5 +30,9 @@ class Event < ActiveRecord::Base
 
   def head_commit_id
     payload["head_commit"]["id"]
+  end
+
+  def branch
+    payload["ref"].split("/").last
   end
 end

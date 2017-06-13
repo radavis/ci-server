@@ -1,8 +1,39 @@
+<div class="row">
+  <div class="col">
+    Name
+  </div>
+
+  <div class="col">
+    Age
+  </div>
+
+  <div class="col">
+    Configured
+  </div>
+
+  <div class="col">
+    Last Build
+  </div>
+</div>
+
 <% @repositories.each do |repo| %>
-  <div>
-    <a href="https://github.com/<%= repo["name"] %>">
-      <%= repo["name"] %>
-    </a>
-    Added <%= time_ago(repo["created_at"]) %>
+  <div class="row">
+    <div class="col">
+      <a href="/repositories/<%= repo.id %>">
+        <%= repo.name %>
+      </a>
+    </div>
+
+    <div class="col">
+      Added <%= time_ago(repo.created_at) %>
+    </div>
+
+    <div class="col">
+      ?
+    </div>
+
+    <div class="col">
+      ?
+    </div>
   </div>
 <% end %>

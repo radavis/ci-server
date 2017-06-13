@@ -1,12 +1,14 @@
 RSpec.describe "Build" do
   let(:repo) {
     Repository.create(
-      name: "exloc/example",
-      url: "https://github.com/exloc/example",
+      name: "radavis/ci-server",
+      url: "https://github.com/radavis/ci-server",
       build_instructions: "bundle && rake"
   )}
 
-  let(:build) { repo.builds.create }
+  let(:json_payload) { File.read("./docs/github-push-event.json") }
+  let(:event) { repo.events.create(event_type: "push", json_payload: json_payload) }
+  let(:build) { event.builds.create }
 
   describe ".unstarted" do
     it "return builds where started is false" do

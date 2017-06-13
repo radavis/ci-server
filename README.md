@@ -81,7 +81,7 @@ builds.id: 6 for radavis/local-events exited with 1 exit status.
 
 Check the build report: `rake db:query SQL='select build_report from builds where id = 6'`
 
-## Genral Flow
+## General Flow
 
 * GitHub Event -> POST /events -> Insert into repositories, Insert into events
 * Scan for unprocessed events that have instructions. `rake ci:process_events`

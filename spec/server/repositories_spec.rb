@@ -31,7 +31,7 @@ RSpec.describe "Repositories" do
         configuration_instructions: "bundle && rake db:create db:migrate && rake db:test:prepare",
         build_instructions: "RAILS_ENV=test bundle exec rake spec"
       }
-      expect(last_response).to be_ok
+      expect(last_response).to be_redirect
     end
   end
 end

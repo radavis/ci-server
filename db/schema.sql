@@ -26,12 +26,12 @@ create table events (
 drop table if exists builds;
 create table builds (
   id integer primary key not null,
-  repository_id integer not null,
+  event_id integer not null,
   started integer not null default 0,
   build_report text,
   exit_status integer,
   reported integer not null default 0,
   created_at integer not null,
   updated_at integer not null,
-  foreign key (repository_id) references repositories (id)
+  foreign key (event_id) references events (id)
 );

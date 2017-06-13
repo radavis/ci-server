@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col">
+    <div>
+      Name: <%= @repository.name %>
+    </div>
+
+    <div>
+      Added: <%= time_ago(@repository.created_at) %>
+    </div>
+
+    <div>
+      Configured: <%= @repository.configured? ? "✅" : "❌" %>
+    </div>
+
+    <div>
+      Last Build: <%= @repository.builds.last %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <form action="/repositories/<%= @repository.id %>" method="POST">
+      <input type="hidden" name="_method" value="PATCH">
+
+      <div>
+        <label for="url">Clone URL</label>
+        <input id="url"
+          name="url"
+          type="url"
+          value="<%= @repository.url || 'https://username:token@github.com/rails/rails' %>"
+        />
+      </div>
+
+      <div>
+        <label for="configuration_instructions">Configuration Instructions</label>
+      </div>
+      <div>
+        <textarea id="configuration_instructions" name="configuration_instructions">
+<%= @repository.configuration_instructions || "bundle && rake db:create db:migrate db:test:prepare" %>
+        </textarea>
+      </div>
+
+      <div>
+        <label for="build_instructions">Build Instructions</label>
+      </div>
+      <div>
+        <textarea id="build_instructions" name="build_instructions">
+<%= @repository.build_instructions || "rake" %>
+        </textarea>
+      </div>
+
+      <button type="submit">Update Repository</button>
+    </form>
+  </div>
+</div>

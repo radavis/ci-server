@@ -1,4 +1,5 @@
 require "open3"
+require "pp"
 
 class Builder
   class << self
@@ -20,7 +21,7 @@ class Builder
   end
 
   def build
-    build.update_attributes(started: true)
+    @build.update_attributes(started: true)
     Dir.mktmpdir do |dir|
       Dir.chdir(dir) do
         execute_command_list
@@ -33,18 +34,20 @@ class Builder
 
   def execute_command_list
     executed_commands = []
+    result = nil
 
     puts "builds.id: #{@build.id} for #{@build.repository.name} started."
     command_list.each do |command|
       puts "  executing: #{command}"
       stdout, stderr, status = Open3.capture3(command)
-      exitstatus = status.exitstatus
-      executed_commands << [command, stdout, stderr, exitstatus]
-      break if exitstatus != 0
+      result = status.exitstatus
+      executed_commands << [command, stdout, stderr, result]
+      break if result != 0
     end
 
-    puts "builds.id: #{@build.id} for #{@build.repository.name} exited with #{exitstatus} exit status."
-    @build.update_attributes({ build_report: executed_commands.to_json, exit_status: exitstatus })
+    pp executed_commands
+    puts "builds.id: #{@build.id} for #{@build.repository.name} exited with #{result} exit status."
+    @build.update_attributes({ build_report: executed_commands.to_json, exit_status: result })
   end
 
   def command_list
@@ -52,9 +55,9 @@ class Builder
       "git init",
       "git remote add origin #{@build.repository.url}",
       "git pull origin master",
-      "git checkout #{@build.head_commit_id}",
-      @build.configuration_instructions,
-      @build.build_instructions
-    ]
+      "git fetch",
+      "git checkout #{@build.event.branch}",
+      @build.repository.instructions
+    ].flatten
   end
 end

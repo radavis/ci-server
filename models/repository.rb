@@ -14,5 +14,13 @@ class Repository < ActiveRecord::Base
   end
 
   has_many :events
-  has_many :builds
+  has_many :builds, through: :events
+
+  def configured?
+    self.class.configured.include?(self)
+  end
+
+  def instructions
+    configuration_instructions.split("\r\n") + build_instructions.split("\r\n")
+  end
 end

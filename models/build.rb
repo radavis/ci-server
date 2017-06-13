@@ -5,8 +5,11 @@ class Build < ActiveRecord::Base
     end
   end
 
-  belongs_to :repository
-  has_many :events, through: :repository
+  belongs_to :event
+
+  def repository
+    event.repository
+  end
 
   def passed?
     exit_status == 0
@@ -18,5 +21,9 @@ class Build < ActiveRecord::Base
 
   def head_commit_id
     event.head_commit_id
+  end
+
+  def to_s
+    "#{head_commit_id} #{repository.name} #{passed? ? 'passed' : 'failed'} at #{updated_at}"
   end
 end
